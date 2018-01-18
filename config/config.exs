@@ -57,4 +57,5 @@ config :wanon,
   
 config :wanon,
     Wanon.Quotes.CacheClean,
-    every: 10 * 60 * 1000
+    every: 10 * 60 * 1000,
+    keep: 60 * 60 * 24 * 2 # 2 days (yes, no Timex)

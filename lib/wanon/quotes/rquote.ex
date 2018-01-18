@@ -11,7 +11,9 @@ defmodule Wanon.Quotes.RQuote do
   end
 
   defp selector(%{"message" => %{"text" => text}}) do
-    String.starts_with?(text, "/rquote")
+    text
+    |> String.downcase() 
+    |> String.starts_with?("/rquote")
   end
 
   def handle_events(events, _from, state) do

@@ -15,7 +15,7 @@ defmodule Wanon.Quotes.CacheClean do
 
   def handle_info(:clean, :ok) do
     Logger.debug "Cleaning cache"
-    from(e in CacheEntry, where: e.date < 0)
+    from(e in CacheEntry, where: e.date < ^oldest())
     |> Wanon.Repo.delete_all
 
     schedule() 
@@ -23,6 +23,12 @@ defmodule Wanon.Quotes.CacheClean do
   end
 
   defp schedule() do
-    Process.send_after(self(), :clean, Application.get_env(:wanon, __MODULE__)[:every])
+    every = Application.get_env(:wanon, __MODULE__)[:every]
+    Process.send_after(self(), :clean, every)
+  end
+
+  defp oldest() do
+    keep = Application.get_env(:wanon, __MODULE__)[:keep]
+    DateTime.to_unix(DateTime.utc_now()) - keep
   end
 end
