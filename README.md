@@ -1,6 +1,7 @@
+[![Build Status](https://travis-ci.org/graffic/wanon-elixir.svg?branch=master)](https://travis-ci.org/graffic/wanon-elixir)
 # Wanon
 
-**TODO: Add description**
+Telegram quote bot.
 
 # Dev notes
 
