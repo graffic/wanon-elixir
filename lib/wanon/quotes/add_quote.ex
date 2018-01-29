@@ -23,6 +23,8 @@ defmodule Wanon.Quotes.AddQuote do
 
   defp handle_event(%{"message" => %{"reply_to_message" => reply}} = event) do
     # Add quote
+    %{"chat" => %{"id" => chat_id}, "message_id" => message_id} = reply
+    Wanon.Quotes.Builder.build_from(chat_id, message_id, reply)
 
     # Notify about quote added
     Wanon.Telegram.reply(event, "procesado correctamente, siguienteeeeeee!!!!")
@@ -32,4 +34,5 @@ defmodule Wanon.Quotes.AddQuote do
     # Notify that you need to reply to a message
     Wanon.Telegram.reply(event, "Reply to a message to add a quote")
   end
+
 end

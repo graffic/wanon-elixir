@@ -7,7 +7,8 @@ defmodule Wanon.Mixfile do
       version: "0.2.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -27,6 +28,13 @@ defmodule Wanon.Mixfile do
       {:gen_stage, "~> 0.13"},
       {:poison, "~> 3.1"},
       {:httpoison, "~> 0.13"}
+    ]
+  end
+
+  defp aliases do
+    # Drop, create and migrate databases before tests
+    [
+      "test": ["ecto.drop", "ecto.create", "ecto.migrate", "test"]
     ]
   end
 end

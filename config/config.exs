@@ -42,7 +42,7 @@ config :wanon,
 
 config :wanon,
   Wanon.Telegram,
-  timeout: String.to_integer(System.get_env("WANON_TELEGRAM_TIMEOUT")),
+  timeout: String.to_integer(System.get_env("WANON_TELEGRAM_TIMEOUT") || "0"),
   token: System.get_env("WANON_TELEGRAM_TOKEN")
 
 config :wanon,
@@ -59,3 +59,5 @@ config :wanon,
     Wanon.Quotes.CacheClean,
     every: 10 * 60 * 1000,
     keep: 60 * 60 * 24 * 2 # 2 days (yes, no Timex)
+
+import_config "#{Mix.env}.exs"
