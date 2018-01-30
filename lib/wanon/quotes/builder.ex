@@ -29,6 +29,4 @@ defmodule Wanon.Quotes.Builder do
     
     find_rest(next_entry, [entry.message | rest ])
   end
-
-
 end
