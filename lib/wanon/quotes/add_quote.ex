@@ -22,19 +22,18 @@ defmodule Wanon.Quotes.AddQuote do
     {:noreply, [], state}
   end
 
-  defp handle_event(%{"message" => %{"reply_to_message" => reply, "from" => from}} = event) do
-    IO.puts "Event #{inspect(from)}"
+  defp handle_event(%{"message" => %{"reply_to_message" => reply, "from" => from}}) do
     # Add quote
     %{"chat" => %{"id" => chat_id}, "message_id" => message_id} = reply
-    Builder.build_from(chat_id, message_id, reply)
+    Builder.build_from(chat_id, message_id, Poison.encode!(reply))
     |> Store.store(from)
 
     # Notify about quote added
-    Wanon.Telegram.reply(event, "procesado correctamente, siguienteeeeeee!!!!")
+    Wanon.Telegram.reply(reply, "procesado correctamente, siguienteeeeeee!!!!")
   end
 
   defp handle_event(event) do
     # Notify that you need to reply to a message
-    Wanon.Telegram.reply(event, "Reply to a message to add a quote")
+    Wanon.Telegram.reply(event["message"], "Reply to a message to add a quote")
   end
 end

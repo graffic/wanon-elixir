@@ -29,7 +29,7 @@ defmodule Wanon.Quotes.Cache do
         _ -> nil
       end,
       date: message["date"],
-      message: Poison.encode!(message)
+      message: message
     }
   end
 end

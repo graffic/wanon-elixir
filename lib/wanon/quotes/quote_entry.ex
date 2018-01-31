@@ -3,7 +3,7 @@ defmodule Wanon.Quotes.QuoteEntry do
 
   schema "quote_entry" do
     field :order, :integer
-    field :message, :binary
+    field :message, :map
     belongs_to :quote, Wanon.Quotes.Quote
   end
 end

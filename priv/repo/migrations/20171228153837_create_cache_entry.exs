@@ -10,7 +10,7 @@ defmodule Wanon.Repo.Migrations.CreateMessagesCache do
       add :message_id, :integer, null: false
       add :reply_id, :integer, default: nil
       add :date, :integer, null: false
-      add :message, :binary, null: false
+      add :message, :map, null: false
     end
 
     create index("cache_entry", [:chat_id, :message_id], unique: true)

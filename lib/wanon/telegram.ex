@@ -16,7 +16,7 @@ defmodule Wanon.Telegram do
     |> get_body()
   end
 
-  def reply(%{"message" => %{"chat" => %{"id" => id}, "message_id" => message_id}}, text) do
+  def reply(%{"chat" => %{"id" => id}, "message_id" => message_id}, text) do
     headers = [{"Content-type", "application/json"}]
     {:ok, body} = Poison.encode(%{
       "chat_id": id,

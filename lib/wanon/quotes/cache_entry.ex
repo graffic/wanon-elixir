@@ -6,6 +6,6 @@ defmodule Wanon.Quotes.CacheEntry do
     field :message_id, :integer
     field :reply_id, :integer, default: nil
     field :date, :integer
-    field :message, :binary
+    field :message, :map
   end
 end
