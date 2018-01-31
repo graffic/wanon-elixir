@@ -23,11 +23,11 @@ defmodule Wanon.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "2.2.7"},
-      {:postgrex, "0.13.3"},
+      {:ecto, "~> 2.2"},
+      {:postgrex, "~> 0.13"},
       {:gen_stage, "~> 0.13"},
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 0.13"}
+      {:httpoison, "~> 1.0"}
     ]
   end
 
