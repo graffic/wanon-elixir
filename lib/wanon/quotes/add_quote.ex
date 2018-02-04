@@ -31,7 +31,7 @@ defmodule Wanon.Quotes.AddQuote do
     %{"chat" => %{"id" => chat_id}, "message_id" => message_id} = reply
 
     Builder.build_from(chat_id, message_id, reply)
-    |> Store.store(from)
+    |> Store.store(from, chat_id)
 
     # Notify about quote added
     @telegram.reply(reply, "procesado correctamente, siguienteeeeeee!!!!")

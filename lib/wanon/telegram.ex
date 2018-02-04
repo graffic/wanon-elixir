@@ -106,4 +106,3 @@ defmodule Wanon.Telegram.GetUpdates do
     {:noreply, result, {offset, pending_demand}}
   end
 end
-
