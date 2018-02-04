@@ -43,7 +43,8 @@ config :wanon,
 config :wanon,
   Wanon.Telegram,
   timeout: String.to_integer(System.get_env("WANON_TELEGRAM_TIMEOUT") || "0"),
-  token: System.get_env("WANON_TELEGRAM_TOKEN")
+  token: System.get_env("WANON_TELEGRAM_TOKEN"),
+  base_url: "https://api.telegram.org/bot"
 
 config :wanon,
   Wanon.Quotes.Consumer,
@@ -59,5 +60,7 @@ config :wanon,
     Wanon.Quotes.CacheClean,
     every: 10 * 60 * 1000,
     keep: 60 * 60 * 24 * 2 # 2 days (yes, no Timex)
+
+config :wanon, Telegram.API, Wanon.Telegram
 
 import_config "#{Mix.env}.exs"

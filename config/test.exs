@@ -13,3 +13,5 @@ config :wanon,
   Wanon.Telegram,
   timeout: 10,
   token: "token"
+
+config :wanon, Telegram.API, Telegram.Mock

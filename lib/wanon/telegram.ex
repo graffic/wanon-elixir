@@ -1,4 +1,5 @@
 defmodule Wanon.Telegram do
+  @behaviour Telegram.API
   require Logger
 
   def get_updates(offset \\ 0) do
@@ -36,8 +37,11 @@ defmodule Wanon.Telegram do
   end
 
   defp url() do
-    token = Application.get_env(:wanon, __MODULE__)[:token]
-    "https://api.telegram.org/bot#{token}/"
+    config = Application.get_env(:wanon, __MODULE__)
+    base_url = config[:base_url]
+    token = config[:token]
+    IO.puts "BASE: #{base_url}"
+    "#{base_url}#{token}/"
   end
 
   defp timeout() do
