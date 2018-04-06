@@ -43,17 +43,17 @@ defmodule AddQuoteTest do
 
   test "Adds a quote, says ok" do
     reply = %{"chat" => %{"id" => 5}, "message_id" => 2}
-    from = %{"name" => "adds quote"}
+    msg_from = %{"name" => "adds quote"}
     events = [%{"message" => %{
       "text" => "/addquote",
       "chat" => %{"id" => 5},
       "message_id" => 6,
       "reply_to_message" => reply,
-      "from" => from
+      "from" => msg_from
     }}]
     Wanon.Quotes.AddQuote.handle_events(events, nil, :ok)
     
     assert_received :reply_processed
-    assert Wanon.Repo.one(from q in Wanon.Quotes.Quote, where: q.creator == ^from, select: count("*")) == 1
+    assert Wanon.Repo.one(from q in Wanon.Quotes.Quote, where: q.creator == ^msg_from, select: count("*")) == 1
   end
 end

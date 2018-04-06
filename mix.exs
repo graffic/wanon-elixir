@@ -20,6 +20,9 @@ defmodule Wanon.Mixfile do
     ]
   end
 
+  # WIP: To change or not to change main app while testing
+  defp mod(:test), do: {Wanon.TestApplication}
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [

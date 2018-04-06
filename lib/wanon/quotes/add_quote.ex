@@ -1,4 +1,7 @@
 defmodule Wanon.Quotes.AddQuote do
+  @moduledoc """
+  Deals with /addquote command
+  """
   use GenStage
   require Logger
   alias Wanon.Quotes.{Builder, Store, Consumer}

@@ -14,4 +14,9 @@ config :wanon,
   timeout: 10,
   token: "token"
 
+  config :wanon,
+    Wanon.Quotes.CacheClean,
+    every: 42,
+    keep: 84
+
 config :wanon, Telegram.API, Telegram.Mock
