@@ -20,9 +20,6 @@ defmodule Wanon.Mixfile do
     ]
   end
 
-  # WIP: To change or not to change main app while testing
-  defp mod(:test), do: {Wanon.TestApplication}
-
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
@@ -37,7 +34,7 @@ defmodule Wanon.Mixfile do
   defp aliases do
     # Drop, create and migrate databases before tests
     [
-      "test": ["ecto.drop", "ecto.create", "ecto.migrate", "test"]
+      "test": ["ecto.drop", "ecto.create", "ecto.migrate", "test --no-start"]
     ]
   end
 end

@@ -40,7 +40,7 @@ defmodule Wanon.Telegram do
     config = Application.get_env(:wanon, __MODULE__)
     base_url = config[:base_url]
     token = config[:token]
-    IO.puts "BASE: #{base_url}"
+
     "#{base_url}#{token}/"
   end
 

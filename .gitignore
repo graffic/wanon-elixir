@@ -21,3 +21,6 @@ erl_crash.dump
 
 # Environment variables
 env/
+
+# MAC stuff
+.DS_Store
