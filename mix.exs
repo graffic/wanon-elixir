@@ -8,7 +8,9 @@ defmodule Wanon.Mixfile do
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      test_coverage: [tool: ExCoveralls],
+      test_paths: test_paths(Mix.env)
     ]
   end
 
@@ -20,6 +22,9 @@ defmodule Wanon.Mixfile do
     ]
   end
 
+  defp test_paths(:integration), do: ["integration"]
+  defp test_paths(_), do: ["test"]
+
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
@@ -27,7 +32,10 @@ defmodule Wanon.Mixfile do
       {:postgrex, "~> 0.13"},
       {:gen_stage, "~> 0.13"},
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 1.0"}
+      {:httpoison, "~> 1.0"},
+      {:excoveralls, "~> 0.8", only: :test},
+      {:plug, "~> 1.5", only: :integration},
+      {:cowboy, "~> 2.3", only: :integration}
     ]
   end
 
