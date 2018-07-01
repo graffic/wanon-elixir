@@ -1,13 +1,20 @@
 defmodule StateServer do
   @moduledoc """
-  Keeps the current state for response sequences
+  Keeps the current state for response sequences.
+
+  For a given path, there is a sequence of responses. After the sequence is finished
+  the genserver will answer.
   """
-  use GenServer, start:
+  use GenServer
+
+  defmodule StateEntry do
+    defstruct replies: [], finished: false
+  end
 
 
   @replies %{
     "/baseINTEGRATION/getUpdates" => [
-      {:json, "{\"result\":[]}"},
+      {:json, File.read!("integration/fixture.1.json")},
       {:json_block, "{\"result\":[]}", 5}
     ]
   }
@@ -16,14 +23,27 @@ defmodule StateServer do
     GenServer.start_link(__MODULE__, replies)
   end
 
-  def init(state), do: {:ok, state}
+  def init(replies) do
+    new_replies = replies |>
+    Enum.map(fn {k, v} -> {k, %{remaining: v, finished: false}} end)
+    Enum.reduce(%{}, &Enum.into/2)
+
+    {:ok, new_replies}
+  end
 
   def handle_call(path, _from, state) do
     case Map.fetch(state, path) do
-      {:ok, [value]} -> {:reply, value, state}
-      {:ok, [value|tail]} -> {:reply, value, %{state| path => tail}}
+      {:ok, value} -> next_state(state, value)
       :error -> {:reply, :notfound, state}
     end
+  end
+
+  defp next_state(state, %{remaining: [value]}) do
+    {:reply, value, %{state| path => %{remaining: [value], finished: true}}
+  end
+
+  defp next_state(state, %{remaining: [value|tail]}) do
+    {:reply, value, %{state| path => %{remaining: tail, finished: false}}}
   end
 
   def request(pid, request_path) do
@@ -63,6 +83,9 @@ defmodule QuotesTest do
   use ExUnit.Case
 
   test "test basic interaction" do
+    # ToDo
+    # notify when stateserve finishes
+    # Make test server and state server reusable
     {:ok, state} = StateServer.start_link()
     {:ok, server} = Plug.Adapters.Cowboy2.http(TestServer, state, port: 4242)
     Application.ensure_all_started(:wanon)

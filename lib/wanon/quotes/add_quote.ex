@@ -25,6 +25,7 @@ defmodule Wanon.Quotes.AddQuote do
   defp selector(_), do: false
 
   def handle_events(events, _from, state) do
+    IO.inspect events
     Enum.each(events, &handle_event/1)
     {:noreply, [], state}
   end

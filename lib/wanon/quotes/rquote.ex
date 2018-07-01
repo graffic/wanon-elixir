@@ -1,7 +1,11 @@
 defmodule Wanon.Quotes.RQuote do
   use GenStage
   require Logger
-  alias Wanon.Quotes.{Quote,Consumer}
+  alias Wanon.Quotes.{Quote, Consumer}
+  alias Wanon.Repo
+  import Ecto.Query
+
+  @telegram Application.get_env(:wanon, Telegram.API)
 
   def start_link() do
     GenStage.start_link(__MODULE__, :ok, name: __MODULE__)
@@ -13,7 +17,7 @@ defmodule Wanon.Quotes.RQuote do
 
   defp selector(%{"message" => %{"text" => text}}) do
     text
-    |> String.downcase() 
+    |> String.downcase()
     |> String.starts_with?("/rquote")
   end
 
@@ -25,30 +29,38 @@ defmodule Wanon.Quotes.RQuote do
     {:noreply, [], state}
   end
 
-  defp handle_event(event) do
-    event
+  defp handle_event(%{"message" => %{"chat" => %{"id" => chat_id}} = msg}) do
+    chat_id
+    |> count_quotes()
     |> get_quote()
-    |> send_quote()
+    |> send_quote(msg)
   end
 
-  defp get_quote(%{"message" => %{"chat" => %{"id" => chat_id}}}) do
-    alias Wanon.Repo
-    import Ecto.Query
+  defp count_quotes(chat_id) do
+    {
+      from(q in Quote, where: q.chat_id == ^chat_id, select: count("*")) |> Repo.one(),
+      chat_id
+    }
+  end
 
-    quotes = from(q in Quote, where: q.chat_id == ^chat_id, select: count("*")) |> Repo.one
-    
-    offset = Enum.random(0..max(quotes-1, 0))
-    the_quote = from(q in Quote,
+  defp get_quote({0, _}), do: :empty
+
+  defp get_quote({quotes, chat_id}) do
+    from(
+      q in Quote,
       where: q.chat_id == ^chat_id,
-      offset: ^offset,
+      offset: ^Enum.random(0..max(quotes - 1, 0)),
       preload: [:entries],
-      limit: 1) 
+      limit: 1
+    )
     |> Repo.one()
-    {chat_id, the_quote}
   end
 
-  defp send_quote({chat_id, the_quote}) do
-    # ToDo
-    IO.puts "ChatID #{chat_id} Quote #{inspect(the_quote)}"
+  defp send_quote(:empty, msg) do
+    @telegram.reply(msg, "I'm empty. Add quotes to me.")
+  end
+
+  defp send_quote(the_quote, _) do
+    @telegram.send_text(2, "test")
   end
 end
