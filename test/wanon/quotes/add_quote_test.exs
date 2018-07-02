@@ -1,5 +1,6 @@
 defmodule AddQuoteTest do
   use ExUnit.Case
+  import Mox
   import Ecto.Query
 
   setup do
@@ -30,15 +31,19 @@ defmodule AddQuoteTest do
     assert get_selector().(message)
   end
 
+
   test "Add quote without a reply" do
-    events = [%{"message" => %{
+    msg = %{
       "text" => "/addquote",
       "chat" => %{"id" => 5},
       "message_id" => 6
-    }}]
-    Wanon.Quotes.AddQuote.handle_events(events, nil, :ok)
-    
-    assert_received :reply_error 
+    }
+    update = %{"message" => msg}
+
+    Telegram.Mock
+    |> expect(:reply, fn ^msg, "Reply to a message to add a quote" -> nil end)
+
+    Wanon.Quotes.AddQuote.handle_events([update], nil, :ok)
   end
 
   test "Adds a quote, says ok" do
@@ -51,9 +56,12 @@ defmodule AddQuoteTest do
       "reply_to_message" => reply,
       "from" => msg_from
     }}]
+
+    Telegram.Mock
+    |> expect(:reply, fn ^reply, "procesado correctamente, siguienteeeeeee!!!!" -> nil end)
+
     Wanon.Quotes.AddQuote.handle_events(events, nil, :ok)
-    
-    assert_received :reply_processed
+
     assert Wanon.Repo.one(from q in Wanon.Quotes.Quote, where: q.creator == ^msg_from, select: count("*")) == 1
   end
 end
