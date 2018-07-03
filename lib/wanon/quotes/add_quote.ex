@@ -1,4 +1,7 @@
 defmodule Wanon.Quotes.AddQuote do
+  @moduledoc """
+  Deals with /addquote command
+  """
   use GenStage
   require Logger
   alias Wanon.Quotes.{Builder, Store, Consumer}
@@ -22,6 +25,7 @@ defmodule Wanon.Quotes.AddQuote do
   defp selector(_), do: false
 
   def handle_events(events, _from, state) do
+    IO.inspect events
     Enum.each(events, &handle_event/1)
     {:noreply, [], state}
   end
@@ -31,7 +35,7 @@ defmodule Wanon.Quotes.AddQuote do
     %{"chat" => %{"id" => chat_id}, "message_id" => message_id} = reply
 
     Builder.build_from(chat_id, message_id, reply)
-    |> Store.store(from)
+    |> Store.store(from, chat_id)
 
     # Notify about quote added
     @telegram.reply(reply, "procesado correctamente, siguienteeeeeee!!!!")

@@ -6,17 +6,10 @@ config :wanon,
   adapter: Ecto.Adapters.Postgres,
   database: "wanon_test",
   username: "postgres",
-  password: "mysecretpassword",
-  pool: Ecto.Adapters.SQL.Sandbox
+  password: "mysecretpassword"
 
 config :wanon,
   Wanon.Telegram,
   timeout: 10,
-  token: "token"
-
-  config :wanon,
-    Wanon.Quotes.CacheClean,
-    every: 42,
-    keep: 84
-
-config :wanon, Telegram.API, Telegram.Mock
+  token: "INTEGRATION",
+  base_url: "http://localhost:4242/base"

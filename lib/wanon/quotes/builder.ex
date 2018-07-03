@@ -1,4 +1,7 @@
 defmodule Wanon.Quotes.Builder do
+  @moduledoc """
+  Builds a quote from cache if possible.
+  """
   import Ecto.Query
   alias Wanon.Quotes.CacheEntry
 

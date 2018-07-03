@@ -6,24 +6,35 @@ defmodule Wanon.Telegram do
     timeout = timeout()
     recv_timeout = (timeout*2) * 1000
     Logger.debug("GetUpdates offset:#{offset} timeouts:#{timeout} #{recv_timeout}")
-    url() <> "getUpdates" 
+    url() <> "getUpdates"
     |> HTTPoison.get([], [recv_timeout: recv_timeout, params: [{"offset", offset}, {"timeout", timeout}]])
     |> get_body()
   end
 
   def get_me() do
-    url() <> "getMe" 
+    url() <> "getMe"
     |> HTTPoison.get()
     |> get_body()
   end
 
   def reply(%{"chat" => %{"id" => id}, "message_id" => message_id}, text) do
-    headers = [{"Content-type", "application/json"}]
-    {:ok, body} = Poison.encode(%{
+    send_message(%{
       "chat_id": id,
       "text": text,
       "reply_to_message_id": message_id
     })
+  end
+
+  def send_text(%{"chat" => %{"id" => id}}, text) do
+    send_message(%{
+      "chat_id": id,
+      "text": text,
+    })
+  end
+
+  defp send_message(message) do
+    headers = [{"Content-type", "application/json"}]
+    {:ok, body} = Poison.encode(message)
     url() <> "sendMessage"
     |> HTTPoison.post(body, headers)
   end
@@ -40,7 +51,7 @@ defmodule Wanon.Telegram do
     config = Application.get_env(:wanon, __MODULE__)
     base_url = config[:base_url]
     token = config[:token]
-    IO.puts "BASE: #{base_url}"
+
     "#{base_url}#{token}/"
   end
 
@@ -106,4 +117,3 @@ defmodule Wanon.Telegram.GetUpdates do
     {:noreply, result, {offset, pending_demand}}
   end
 end
-
