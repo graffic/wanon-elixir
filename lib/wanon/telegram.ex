@@ -25,9 +25,9 @@ defmodule Wanon.Telegram do
     })
   end
 
-  def send_text(chat_id, text) do
+  def send_text(%{"chat" => %{"id" => id}}, text) do
     send_message(%{
-      "chat_id": chat_id,
+      "chat_id": id,
       "text": text,
     })
   end

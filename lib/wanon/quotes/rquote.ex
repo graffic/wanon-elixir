@@ -1,7 +1,7 @@
 defmodule Wanon.Quotes.RQuote do
   use GenStage
   require Logger
-  alias Wanon.Quotes.{Quote, Consumer}
+  alias Wanon.Quotes.{Quote, Consumer, QuoteEntry, Render}
   alias Wanon.Repo
   import Ecto.Query
 
@@ -33,6 +33,7 @@ defmodule Wanon.Quotes.RQuote do
     chat_id
     |> count_quotes()
     |> get_quote()
+    |> render_quote()
     |> send_quote(msg)
   end
 
@@ -46,21 +47,29 @@ defmodule Wanon.Quotes.RQuote do
   defp get_quote({0, _}), do: :empty
 
   defp get_quote({quotes, chat_id}) do
+    entries_sort = from e in QuoteEntry, order_by: e.order
     from(
       q in Quote,
       where: q.chat_id == ^chat_id,
       offset: ^Enum.random(0..max(quotes - 1, 0)),
-      preload: [:entries],
+      preload: [entries: ^entries_sort],
       limit: 1
     )
     |> Repo.one()
+  end
+
+  defp render_quote(:empty), do: :empty
+
+  defp render_quote(the_quote) do
+    Render.render(the_quote)
   end
 
   defp send_quote(:empty, msg) do
     @telegram.reply(msg, "I'm empty. Add quotes to me.")
   end
 
-  defp send_quote(the_quote, _) do
-    @telegram.send_text(2, "test")
+  defp send_quote(rendered, msg) do
+    @telegram.send_text(msg, rendered)
   end
+
 end

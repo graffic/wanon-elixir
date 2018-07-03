@@ -31,7 +31,6 @@ defmodule AddQuoteTest do
     assert get_selector().(message)
   end
 
-
   test "Add quote without a reply" do
     msg = %{
       "text" => "/addquote",

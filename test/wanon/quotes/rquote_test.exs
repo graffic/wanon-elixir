@@ -8,6 +8,7 @@ defmodule RQuoteTest do
 
   # Note: learn a about these two ways.
   setup :verify_on_exit!
+
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Wanon.Repo)
   end
@@ -39,19 +40,27 @@ defmodule RQuoteTest do
 
   test "Get one quote" do
     alias Wanon.Quotes.{Quote, QuoteEntry}
+
     q = %Quote{
       creator: %{"first_name" => "Javier"},
       chat_id: 42,
       entries: [
         %QuoteEntry{
+          order: 1,
+          message: %{"text" => "eggs", "from" => %{"username" => "python"}}
+        },
+        %QuoteEntry{
           order: 0,
-          message: %{"text" => "spam"}
+          message: %{"text" => "spam", "from" => %{"username" => "monty"}}
         }
       ]
     }
+
     Wanon.Repo.insert(q)
+
     Telegram.Mock
-    |> expect(:send_text, fn 2, "test" -> nil end)
+    |> expect(:send_text, fn %{"chat" => %{"id" => 42}}, "<monty> spam\n<python> eggs" -> nil end)
+
     RQuote.handle_events([@msg], nil, :ok)
   end
 end
