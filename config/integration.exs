@@ -13,6 +13,3 @@ config :wanon,
   timeout: 10,
   token: "INTEGRATION",
   base_url: "http://localhost:4242/base"
-
-
-config :wanon, Telegram.API, Telegram.Mock

@@ -18,38 +18,38 @@ defmodule StateServer do
       {:json_block, "{\"result\":[]}", 5}
     ]
   }
-  
+
   def start_link(replies \\ @replies) do
     GenServer.start_link(__MODULE__, replies)
   end
 
   def init(replies) do
-    new_replies = replies |>
-    Enum.map(fn {k, v} -> {k, %{remaining: v, finished: false}} end)
-    Enum.reduce(%{}, &Enum.into/2)
+    new_replies = replies
+    |> Enum.map(fn {k, v} -> {k, %{remaining: v, finished: false}} end)
+    |> Enum.into(%{})
 
     {:ok, new_replies}
   end
 
   def handle_call(path, _from, state) do
     case Map.fetch(state, path) do
-      {:ok, value} -> next_state(state, value)
+      {:ok, value} -> next_state(state, value, path)
       :error -> {:reply, :notfound, state}
     end
   end
 
-  defp next_state(state, %{remaining: [value]}) do
-    {:reply, value, %{state| path => %{remaining: [value], finished: true}}
+  defp next_state(state, %{remaining: [value]}, path) do
+    {:reply, value, %{state | path => %{remaining: [value], finished: true}}}
   end
 
-  defp next_state(state, %{remaining: [value|tail]}) do
-    {:reply, value, %{state| path => %{remaining: tail, finished: false}}}
+  defp next_state(state, %{remaining: [value|tail]}, path) do
+    {:reply, value, %{state | path => %{remaining: tail, finished: false}}}
   end
 
   def request(pid, request_path) do
     GenServer.call(pid, request_path)
   end
-  
+
 end
 
 defmodule TestServer do
