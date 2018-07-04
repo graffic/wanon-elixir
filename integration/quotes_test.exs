@@ -3,14 +3,13 @@ defmodule StateServer do
   Keeps the current state for response sequences.
 
   For a given path, there is a sequence of responses. After the sequence is finished
-  the genserver will answer.
+  the genserver will keep answering with the last one.
   """
   use GenServer
 
-  defmodule StateEntry do
-    defstruct replies: [], finished: false
+  defmodule State do
+    defstruct replies: [], notify: nil
   end
-
 
   @replies %{
     "/baseINTEGRATION/getUpdates" => [
@@ -24,32 +23,52 @@ defmodule StateServer do
   end
 
   def init(replies) do
-    new_replies = replies
-    |> Enum.map(fn {k, v} -> {k, %{remaining: v, finished: false}} end)
-    |> Enum.into(%{})
+    {
+      :ok,
+      %State{replies: replies
+        |> Enum.map(fn {k, v} -> {k, %{remaining: v, finished: false}} end)
+        |> Enum.into(%{})}
+    }
+  end
 
-    {:ok, new_replies}
+  def handle_cast(from, state) do
+    {:noreply, %{state | notify: from}}
   end
 
   def handle_call(path, _from, state) do
-    case Map.fetch(state, path) do
+    case Map.fetch(state.replies, path) do
       {:ok, value} -> next_state(state, value, path)
       :error -> {:reply, :notfound, state}
     end
   end
 
   defp next_state(state, %{remaining: [value]}, path) do
-    {:reply, value, %{state | path => %{remaining: [value], finished: true}}}
+    state = put_in(state.replies[path].finished, true)
+
+    notify(state.notify, Enum.reduce_while(state.replies, true, fn
+      {_, %{finished: true}}, _ -> {:cont, true}
+      {_, %{finished: false}}, _ -> {:halt, false}
+    end))
+
+    {:reply, value, state}
   end
 
-  defp next_state(state, %{remaining: [value|tail]}, path) do
-    {:reply, value, %{state | path => %{remaining: tail, finished: false}}}
+  defp notify(_, false), do: nil
+  defp notify(pid, true), do: send(pid, :finished)
+
+
+  defp next_state(state, %{remaining: [value | tail]}, path) do
+    new_state = put_in(state.replies[path].remaining, tail)
+    {:reply, value, new_state}
   end
 
   def request(pid, request_path) do
     GenServer.call(pid, request_path)
   end
 
+  def subscribe(pid) do
+    GenServer.cast(pid, self())
+  end
 end
 
 defmodule TestServer do
@@ -83,14 +102,16 @@ defmodule QuotesTest do
   use ExUnit.Case
 
   test "test basic interaction" do
-    # ToDo
-    # notify when stateserve finishes
+
     # Make test server and state server reusable
     {:ok, state} = StateServer.start_link()
+    StateServer.subscribe(state)
+
     {:ok, server} = Plug.Adapters.Cowboy2.http(TestServer, state, port: 4242)
     Application.ensure_all_started(:wanon)
+
     receive do
-      :ok -> nil
+      :finished -> nil
     end
   end
 end
