@@ -1,0 +1,21 @@
+{
+    "ok": true,
+    "result": {
+        "message_id": 270,
+        "from": {
+            "id": 194361460,
+            "is_bot": true,
+            "first_name": "WanonDevBot",
+            "username": "WanonDevBot"
+        },
+        "chat": {
+            "id": 77629777,
+            "first_name": "Javier",
+            "last_name": "(graffic)",
+            "username": "graffic",
+            "type": "private"
+        },
+        "date": 1530785680,
+        "text": "Hello world"
+    }
+}
