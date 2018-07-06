@@ -15,6 +15,16 @@ defmodule StateServer do
     "/baseINTEGRATION/getUpdates" => [
       {:json, File.read!("integration/fixture.1.json")},
       {:json_block, "{\"result\":[]}", 5}
+    ],
+    "/baseINTEGRATION/sendMessage" => [
+      # First rquote, no quotes
+      {:json, File.read!("integration/sendMessage.response.json")},
+      # Add quote without message
+      {:json, File.read!("integration/sendMessage.response.json")},
+      # Right add quote
+      {:json, File.read!("integration/sendMessage.response.json")},
+      # Rquote with quote
+      {:json, File.read!("integration/sendMessage.response.json")}
     ]
   }
 
@@ -53,14 +63,13 @@ defmodule StateServer do
     {:reply, value, state}
   end
 
-  defp notify(_, false), do: nil
-  defp notify(pid, true), do: send(pid, :finished)
-
-
   defp next_state(state, %{remaining: [value | tail]}, path) do
     new_state = put_in(state.replies[path].remaining, tail)
     {:reply, value, new_state}
   end
+
+  defp notify(_, false), do: nil
+  defp notify(pid, true), do: send(pid, :finished)
 
   def request(pid, request_path) do
     GenServer.call(pid, request_path)
@@ -77,6 +86,8 @@ defmodule TestServer do
   def init(state_server), do: state_server
 
   def call(conn, state_server) do
+    {:ok, body, _} = Plug.Conn.read_body(conn)
+    IO.puts body
     state_server
     |> StateServer.request(conn.request_path)
     |> reply(conn)
@@ -99,7 +110,7 @@ defmodule TestServer do
 end
 
 defmodule QuotesTest do
-  use ExUnit.Case
+  use ExUnit.Case, async: false
 
   test "test basic interaction" do
 
@@ -107,7 +118,7 @@ defmodule QuotesTest do
     {:ok, state} = StateServer.start_link()
     StateServer.subscribe(state)
 
-    {:ok, server} = Plug.Adapters.Cowboy2.http(TestServer, state, port: 4242)
+    {:ok, _} = Plug.Adapters.Cowboy2.http(TestServer, state, port: 4242)
     Application.ensure_all_started(:wanon)
 
     receive do

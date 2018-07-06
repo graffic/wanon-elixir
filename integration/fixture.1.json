@@ -1,419 +1,257 @@
 {
-  "ok": true,
-  "result": [
-    {
-      "update_id": 829995130,
-      "message": {
-        "message_id": 255,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
+    "ok": true,
+    "result": [
+        {
+            "update_id": 688579923,
+            "message": {
+                "message_id": 271,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787789,
+                "text": "One"
+            }
         },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
+        {
+            "update_id": 688579924,
+            "message": {
+                "message_id": 272,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787793,
+                "text": "Two"
+            }
         },
-        "date": 1523277817,
-        "text": "One"
-      }
-    },
-    {
-      "update_id": 829995131,
-      "message": {
-        "message_id": 256,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
+        {
+            "update_id": 688579925,
+            "message": {
+                "message_id": 273,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787798,
+                "text": "quote one"
+            }
         },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
+        {
+            "update_id": 688579926,
+            "message": {
+                "message_id": 274,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787812,
+                "reply_to_message": {
+                    "message_id": 273,
+                    "from": {
+                        "id": 77629777,
+                        "is_bot": false,
+                        "first_name": "Javier",
+                        "last_name": "(graffic)",
+                        "username": "graffic",
+                        "language_code": "en-GR"
+                    },
+                    "chat": {
+                        "id": 77629777,
+                        "first_name": "Javier",
+                        "last_name": "(graffic)",
+                        "username": "graffic",
+                        "type": "private"
+                    },
+                    "date": 1530787798,
+                    "text": "quote one"
+                },
+                "text": "quote two"
+            }
         },
-        "date": 1523277820,
-        "text": "My One"
-      }
-    },
-    {
-      "update_id": 829995132,
-      "message": {
-        "message_id": 257,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
+        {
+            "update_id": 688579927,
+            "message": {
+                "message_id": 275,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787821,
+                "text": "/rquote",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 7,
+                        "type": "bot_command"
+                    }
+                ]
+            }
         },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
+        {
+            "update_id": 688579928,
+            "message": {
+                "message_id": 276,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787826,
+                "text": "/addquote",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 9,
+                        "type": "bot_command"
+                    }
+                ]
+            }
         },
-        "date": 1523277830,
-        "reply_to_message": {
-          "message_id": 256,
-          "from": {
-            "id": 77629777,
-            "is_bot": false,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "language_code": "en-GR"
-          },
-          "chat": {
-            "id": 77629777,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "type": "private"
-          },
-          "date": 1523277820,
-          "text": "My One"
+        {
+            "update_id": 688579929,
+            "message": {
+                "message_id": 277,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787836,
+                "reply_to_message": {
+                    "message_id": 274,
+                    "from": {
+                        "id": 77629777,
+                        "is_bot": false,
+                        "first_name": "Javier",
+                        "last_name": "(graffic)",
+                        "username": "graffic",
+                        "language_code": "en-GR"
+                    },
+                    "chat": {
+                        "id": 77629777,
+                        "first_name": "Javier",
+                        "last_name": "(graffic)",
+                        "username": "graffic",
+                        "type": "private"
+                    },
+                    "date": 1530787812,
+                    "text": "quote two"
+                },
+                "text": "/addquote",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 9,
+                        "type": "bot_command"
+                    }
+                ]
+            }
         },
-        "text": "My Two"
-      }
-    },
-    {
-      "update_id": 829995133,
-      "message": {
-        "message_id": 258,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523277832,
-        "text": "Two"
-      }
-    },
-    {
-      "update_id": 829995134,
-      "message": {
-        "message_id": 259,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523277840,
-        "reply_to_message": {
-          "message_id": 257,
-          "from": {
-            "id": 77629777,
-            "is_bot": false,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "language_code": "en-GR"
-          },
-          "chat": {
-            "id": 77629777,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "type": "private"
-          },
-          "date": 1523277830,
-          "text": "My Two"
-        },
-        "text": "My Three"
-      }
-    },
-    {
-      "update_id": 829995135,
-      "message": {
-        "message_id": 260,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523277844,
-        "text": "/addquote",
-        "entities": [
-          {
-            "offset": 0,
-            "length": 9,
-            "type": "bot_command"
-          }
-        ]
-      }
-    },
-    {
-      "update_id": 829995136,
-      "message": {
-        "message_id": 261,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523277869,
-        "text": "/rquote",
-        "entities": [
-          {
-            "offset": 0,
-            "length": 7,
-            "type": "bot_command"
-          }
-        ]
-      }
-    },
-    {
-      "update_id": 829995137,
-      "message": {
-        "message_id": 262,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523279610,
-        "text": "One"
-      }
-    },
-    {
-      "update_id": 829995138,
-      "message": {
-        "message_id": 263,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523279613,
-        "text": "My One"
-      }
-    },
-    {
-      "update_id": 829995139,
-      "message": {
-        "message_id": 264,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523279710,
-        "reply_to_message": {
-          "message_id": 263,
-          "from": {
-            "id": 77629777,
-            "is_bot": false,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "language_code": "en-GR"
-          },
-          "chat": {
-            "id": 77629777,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "type": "private"
-          },
-          "date": 1523279613,
-          "text": "My One"
-        },
-        "text": "My Two"
-      }
-    },
-    {
-      "update_id": 829995140,
-      "message": {
-        "message_id": 265,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523279744,
-        "text": "/addquote",
-        "entities": [
-          {
-            "offset": 0,
-            "length": 9,
-            "type": "bot_command"
-          }
-        ]
-      }
-    },
-    {
-      "update_id": 829995141,
-      "message": {
-        "message_id": 266,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523279753,
-        "reply_to_message": {
-          "message_id": 264,
-          "from": {
-            "id": 77629777,
-            "is_bot": false,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "language_code": "en-GR"
-          },
-          "chat": {
-            "id": 77629777,
-            "first_name": "Javier",
-            "last_name": "(graffic)",
-            "username": "graffic",
-            "type": "private"
-          },
-          "date": 1523279710,
-          "text": "My Two"
-        },
-        "text": "/addquote",
-        "entities": [
-          {
-            "offset": 0,
-            "length": 9,
-            "type": "bot_command"
-          }
-        ]
-      }
-    },
-    {
-      "update_id": 829995142,
-      "message": {
-        "message_id": 267,
-        "from": {
-          "id": 77629777,
-          "is_bot": false,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "language_code": "en-GR"
-        },
-        "chat": {
-          "id": 77629777,
-          "first_name": "Javier",
-          "last_name": "(graffic)",
-          "username": "graffic",
-          "type": "private"
-        },
-        "date": 1523279768,
-        "text": "/rquote",
-        "entities": [
-          {
-            "offset": 0,
-            "length": 7,
-            "type": "bot_command"
-          }
-        ]
-      }
-    }
-  ]
+        {
+            "update_id": 688579930,
+            "message": {
+                "message_id": 278,
+                "from": {
+                    "id": 77629777,
+                    "is_bot": false,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "language_code": "en-GR"
+                },
+                "chat": {
+                    "id": 77629777,
+                    "first_name": "Javier",
+                    "last_name": "(graffic)",
+                    "username": "graffic",
+                    "type": "private"
+                },
+                "date": 1530787839,
+                "text": "/rquote",
+                "entities": [
+                    {
+                        "offset": 0,
+                        "length": 7,
+                        "type": "bot_command"
+                    }
+                ]
+            }
+        }
+    ]
 }
