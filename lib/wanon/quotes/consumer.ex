@@ -7,18 +7,19 @@ defmodule Wanon.Quotes.Consumer do
 
   def init(:ok) do
     opts = [
-      subscribe_to: [{
-        Wanon.Telegram.GetUpdates,
-        max_demand: 10,
-        selector: &selector/1
-      }],
+      subscribe_to: [
+        {
+          Wanon.Telegram.GetUpdates,
+          max_demand: 10, selector: &selector/1
+        }
+      ],
       dispatcher: GenStage.BroadcastDispatcher
     ]
+
     {:producer_consumer, :ok, opts}
   end
-  
+
   defp selector(%{"message" => %{"chat" => %{"id" => id}}}) do
-    IO.puts "SELECTOR #{id}"
     Application.get_env(:wanon, __MODULE__)
     |> MapSet.member?(id)
   end

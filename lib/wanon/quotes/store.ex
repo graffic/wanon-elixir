@@ -3,6 +3,7 @@ defmodule Wanon.Quotes.Store do
 
   def store(quotes, creator, chat_id) do
     {entries, _} = Enum.map_reduce(quotes, 0, &map_entry/2)
+
     Wanon.Repo.insert(%Quote{
       creator: creator,
       chat_id: chat_id,

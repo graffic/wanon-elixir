@@ -20,14 +20,16 @@ defmodule Wanon.Quotes.Cache do
   end
 
   defp map(%{"message" => message}) do
-    Logger.debug "processing #{inspect(message)}"
+    Logger.debug("processing #{inspect(message)}")
+
     %CacheEntry{
       chat_id: message["chat"]["id"],
       message_id: message["message_id"],
-      reply_id: case message do
-        %{"reply_to_message" => %{"message_id" => reply_id}} -> reply_id
-        _ -> nil
-      end,
+      reply_id:
+        case message do
+          %{"reply_to_message" => %{"message_id" => reply_id}} -> reply_id
+          _ -> nil
+        end,
       date: message["date"],
       message: message
     }

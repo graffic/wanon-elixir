@@ -47,7 +47,8 @@ defmodule Wanon.Quotes.RQuote do
   defp get_quote({0, _}), do: :empty
 
   defp get_quote({quotes, chat_id}) do
-    entries_sort = from e in QuoteEntry, order_by: e.order
+    entries_sort = from(e in QuoteEntry, order_by: e.order)
+
     from(
       q in Quote,
       where: q.chat_id == ^chat_id,
@@ -71,5 +72,4 @@ defmodule Wanon.Quotes.RQuote do
   defp send_quote(rendered, msg) do
     @telegram.send_text(msg, rendered)
   end
-
 end

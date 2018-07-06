@@ -10,14 +10,16 @@ defmodule CacheCleanTest do
 
   test "Deletes old cache entries" do
     # Add some entries
-    now = DateTime.to_unix(DateTime.utc_now());
+    now = DateTime.to_unix(DateTime.utc_now())
+
     %CacheEntry{
       chat_id: 1,
       message_id: 2,
       reply_id: nil,
       date: now,
       message: %{text: "spam"}
-    } |> Wanon.Repo.insert
+    }
+    |> Wanon.Repo.insert()
 
     %CacheEntry{
       chat_id: 1,
@@ -25,13 +27,14 @@ defmodule CacheCleanTest do
       reply_id: nil,
       date: now - 3000,
       message: %{text: "eggs"}
-    } |> Wanon.Repo.insert
+    }
+    |> Wanon.Repo.insert()
 
     # Do the cleaning job
     CacheClean.handle_info(:clean, %{every: 0, keep: 2000})
 
     # Check entries.
-    assert Wanon.Repo.one(from q in Wanon.Quotes.CacheEntry, select: count("*")) == 1
+    assert Wanon.Repo.one(from(q in Wanon.Quotes.CacheEntry, select: count("*"))) == 1
   end
 
   test "Schedules next" do

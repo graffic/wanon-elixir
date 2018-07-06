@@ -35,9 +35,12 @@ defmodule StateServer do
   def init(replies) do
     {
       :ok,
-      %State{replies: replies
-        |> Enum.map(fn {k, v} -> {k, %{remaining: v, finished: false}} end)
-        |> Enum.into(%{})}
+      %State{
+        replies:
+          replies
+          |> Enum.map(fn {k, v} -> {k, %{remaining: v, finished: false}} end)
+          |> Enum.into(%{})
+      }
     }
   end
 
@@ -55,10 +58,13 @@ defmodule StateServer do
   defp next_state(state, %{remaining: [value]}, path) do
     state = put_in(state.replies[path].finished, true)
 
-    notify(state.notify, Enum.reduce_while(state.replies, true, fn
-      {_, %{finished: true}}, _ -> {:cont, true}
-      {_, %{finished: false}}, _ -> {:halt, false}
-    end))
+    notify(
+      state.notify,
+      Enum.reduce_while(state.replies, true, fn
+        {_, %{finished: true}}, _ -> {:cont, true}
+        {_, %{finished: false}}, _ -> {:halt, false}
+      end)
+    )
 
     {:reply, value, state}
   end
@@ -87,7 +93,8 @@ defmodule TestServer do
 
   def call(conn, state_server) do
     {:ok, body, _} = Plug.Conn.read_body(conn)
-    IO.puts body
+    IO.puts(body)
+
     state_server
     |> StateServer.request(conn.request_path)
     |> reply(conn)
@@ -113,7 +120,6 @@ defmodule QuotesTest do
   use ExUnit.Case, async: false
 
   test "test basic interaction" do
-
     # Make test server and state server reusable
     {:ok, state} = StateServer.start_link()
     StateServer.subscribe(state)

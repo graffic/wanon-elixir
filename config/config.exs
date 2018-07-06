@@ -29,38 +29,44 @@ use Mix.Config
 #
 #     import_config "#{Mix.env}.exs"
 
-
 # YES, COMPILE TIME. For now it does the job.
 
 config :wanon, ecto_repos: [Wanon.Repo]
-config :wanon,
-  Wanon.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  database: System.get_env("WANON_DB_DATABASE"),
-  username: System.get_env("WANON_DB_USERNAME"),
-  password: System.get_env("WANON_DB_PASSWORD")
 
 config :wanon,
-  Wanon.Telegram,
-  timeout: String.to_integer(System.get_env("WANON_TELEGRAM_TIMEOUT") || "0"),
-  token: System.get_env("WANON_TELEGRAM_TOKEN"),
-  base_url: "https://api.telegram.org/bot"
+       Wanon.Repo,
+       adapter: Ecto.Adapters.Postgres,
+       database: System.get_env("WANON_DB_DATABASE"),
+       username: System.get_env("WANON_DB_USERNAME"),
+       password: System.get_env("WANON_DB_PASSWORD")
 
 config :wanon,
-  Wanon.Quotes.Consumer,
-  MapSet.new([
-    -11802333, # Sandbox chat
-    77629777, # me
-    -5213436, # Irc revival
-    -125151221, # Revival 2.0
-    -219878466 # Revival 3.0
-  ])
-  
+       Wanon.Telegram,
+       timeout: String.to_integer(System.get_env("WANON_TELEGRAM_TIMEOUT") || "0"),
+       token: System.get_env("WANON_TELEGRAM_TOKEN"),
+       base_url: "https://api.telegram.org/bot"
+
 config :wanon,
-    Wanon.Quotes.CacheClean,
-    every: 10 * 60 * 1000,
-    keep: 60 * 60 * 24 * 2 # 2 days (yes, no Timex)
+       Wanon.Quotes.Consumer,
+       MapSet.new([
+         # Sandbox chat
+         -11_802_333,
+         # me
+         77_629_777,
+         # Irc revival
+         -5_213_436,
+         # Revival 2.0
+         -125_151_221,
+         # Revival 3.0
+         -219_878_466
+       ])
+
+config :wanon,
+       Wanon.Quotes.CacheClean,
+       every: 10 * 60 * 1000,
+       # 2 days (yes, no Timex)
+       keep: 60 * 60 * 24 * 2
 
 config :wanon, Telegram.API, Wanon.Telegram
 
-import_config "#{Mix.env}.exs"
+import_config "#{Mix.env()}.exs"

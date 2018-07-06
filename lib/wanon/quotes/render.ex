@@ -1,7 +1,7 @@
 defmodule Wanon.Quotes.Render do
   alias Wanon.Quotes.QuoteEntry
 
-  @spec render(the_quote :: Wanon.Quotes.Quote) :: String.t
+  @spec render(the_quote :: Wanon.Quotes.Quote) :: String.t()
   def render(the_quote) do
     the_quote.entries
     |> Enum.map(&render_entry/1)

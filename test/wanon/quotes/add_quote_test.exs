@@ -23,11 +23,14 @@ defmodule AddQuoteTest do
   end
 
   test "Selector accepts addquote" do
-    message = %{"message" => %{
-      "text" => "/addquote",
-      "chat" => %{"id" => 5},
-      "message_id" => 6
-    }}
+    message = %{
+      "message" => %{
+        "text" => "/addquote",
+        "chat" => %{"id" => 5},
+        "message_id" => 6
+      }
+    }
+
     assert get_selector().(message)
   end
 
@@ -37,6 +40,7 @@ defmodule AddQuoteTest do
       "chat" => %{"id" => 5},
       "message_id" => 6
     }
+
     update = %{"message" => msg}
 
     Telegram.Mock
@@ -48,19 +52,26 @@ defmodule AddQuoteTest do
   test "Adds a quote, says ok" do
     reply = %{"chat" => %{"id" => 5}, "message_id" => 2}
     msg_from = %{"name" => "adds quote"}
-    events = [%{"message" => %{
-      "text" => "/addquote",
-      "chat" => %{"id" => 5},
-      "message_id" => 6,
-      "reply_to_message" => reply,
-      "from" => msg_from
-    }}]
+
+    events = [
+      %{
+        "message" => %{
+          "text" => "/addquote",
+          "chat" => %{"id" => 5},
+          "message_id" => 6,
+          "reply_to_message" => reply,
+          "from" => msg_from
+        }
+      }
+    ]
 
     Telegram.Mock
     |> expect(:reply, fn ^reply, "procesado correctamente, siguienteeeeeee!!!!" -> nil end)
 
     Wanon.Quotes.AddQuote.handle_events(events, nil, :ok)
 
-    assert Wanon.Repo.one(from q in Wanon.Quotes.Quote, where: q.creator == ^msg_from, select: count("*")) == 1
+    assert Wanon.Repo.one(
+             from(q in Wanon.Quotes.Quote, where: q.creator == ^msg_from, select: count("*"))
+           ) == 1
   end
 end

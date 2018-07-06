@@ -6,8 +6,10 @@ defmodule Wanon.Quotes.Builder do
   alias Wanon.Quotes.CacheEntry
 
   def build_from(chat_id, message_id, backup_reply) do
-    from(c in CacheEntry,
-      where: c.chat_id == ^chat_id and c.message_id == ^message_id)
+    from(
+      c in CacheEntry,
+      where: c.chat_id == ^chat_id and c.message_id == ^message_id
+    )
     |> Wanon.Repo.one()
     |> gather(backup_reply)
   end
@@ -26,10 +28,13 @@ defmodule Wanon.Quotes.Builder do
     do: [entry.message | result]
 
   defp find_rest(entry, rest) do
-    next_entry = from(c in Wanon.Quotes.CacheEntry,
-      where: c.chat_id == ^entry.chat_id and c.message_id == ^entry.reply_id)
+    next_entry =
+      from(
+        c in Wanon.Quotes.CacheEntry,
+        where: c.chat_id == ^entry.chat_id and c.message_id == ^entry.reply_id
+      )
       |> Wanon.Repo.one()
-    
-    find_rest(next_entry, [entry.message | rest ])
+
+    find_rest(next_entry, [entry.message | rest])
   end
 end

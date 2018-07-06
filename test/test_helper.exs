@@ -1,5 +1,5 @@
-
 Application.load(:wanon)
+
 for app <- Application.spec(:wanon, :applications) do
   Application.ensure_all_started(app)
 end

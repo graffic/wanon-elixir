@@ -17,30 +17,39 @@ defmodule BuilderTest do
   end
 
   test "One entry" do
-    Wanon.Repo.insert %CacheEntry{
-      chat_id: 1, message_id: 2, date: 3, message: @spam}
+    Wanon.Repo.insert(%CacheEntry{chat_id: 1, message_id: 2, date: 3, message: @spam})
     res = Wanon.Quotes.Builder.build_from(1, 2, @potato)
     assert [@spam] == res
   end
 
   test "Multiple entries" do
-    Wanon.Repo.insert %CacheEntry{
-      chat_id: 1, message_id: 2, date: 3, message: @spam}
-    Wanon.Repo.insert %CacheEntry{
-      chat_id: 1, message_id: 3, reply_id: 2, date: 3, message: @eggs}
-    Wanon.Repo.insert %CacheEntry{
-      chat_id: 1, message_id: 4, reply_id: 3, date: 3, message: @bacon}
-    
+    Wanon.Repo.insert(%CacheEntry{chat_id: 1, message_id: 2, date: 3, message: @spam})
+
+    Wanon.Repo.insert(%CacheEntry{chat_id: 1, message_id: 3, reply_id: 2, date: 3, message: @eggs})
+
+    Wanon.Repo.insert(%CacheEntry{
+      chat_id: 1,
+      message_id: 4,
+      reply_id: 3,
+      date: 3,
+      message: @bacon
+    })
+
     res = Wanon.Quotes.Builder.build_from(1, 4, @potato)
     assert [@spam, @eggs, @bacon] == res
   end
 
   test "Multiple entries where one is missing from cache" do
-    Wanon.Repo.insert %CacheEntry{
-      chat_id: 1, message_id: 3, reply_id: 2, date: 3, message: @eggs}
-    Wanon.Repo.insert %CacheEntry{
-      chat_id: 1, message_id: 4, reply_id: 3, date: 3, message: @bacon}
-    
+    Wanon.Repo.insert(%CacheEntry{chat_id: 1, message_id: 3, reply_id: 2, date: 3, message: @eggs})
+
+    Wanon.Repo.insert(%CacheEntry{
+      chat_id: 1,
+      message_id: 4,
+      reply_id: 3,
+      date: 3,
+      message: @bacon
+    })
+
     res = Wanon.Quotes.Builder.build_from(1, 4, @potato)
     assert [@eggs, @bacon] == res
   end
