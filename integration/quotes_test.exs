@@ -24,6 +24,8 @@ defmodule StateServer do
       # Right add quote
       {:json, File.read!("integration/sendMessage.response.json")},
       # Rquote with quote
+      {:json, File.read!("integration/sendMessage.response.json")},
+      # Second addquote with special cases
       {:json, File.read!("integration/sendMessage.response.json")}
     ]
   }

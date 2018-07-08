@@ -1,7 +1,7 @@
 defmodule Wanon.Telegram.Updates do
   use GenStage
   require Logger
-  alias Wanon.Telegram.HTTP
+  @telegram Application.get_env(:wanon, Wanon.Telegram.Client)
 
   def init(:ok) do
     {:producer, {0, 0}, dispatcher: GenStage.BroadcastDispatcher}
@@ -24,7 +24,7 @@ defmodule Wanon.Telegram.Updates do
   defp produce_updates(offset, total_demand) do
     Logger.debug("Asking for data")
 
-    HTTP.get_updates(offset)
+    @telegram.get_updates(offset)
     |> handle_response(offset, total_demand)
   end
 
