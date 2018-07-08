@@ -1,4 +1,4 @@
-defmodule Telegram.API do
+defmodule Wanon.Telegram.Client do
   @type response :: {:ok, map} | {:error, map}
   @callback get_me() :: response
   @callback get_updates(offset :: integer) :: response

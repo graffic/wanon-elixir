@@ -10,12 +10,9 @@ defmodule Wanon.Application do
     # List all child processes to be supervised
     children = [
       worker(Wanon.Repo, []),
-      worker(Wanon.Telegram.GetUpdates, []),
-      worker(Wanon.Quotes.Consumer, []),
-      worker(Wanon.Quotes.Cache, []),
-      worker(Wanon.Quotes.AddQuote, []),
-      worker(Wanon.Quotes.RQuote, []),
-      worker(Wanon.Quotes.CacheClean, [])
+      worker(Wanon.Telegram.Updates, []),
+      worker(Wanon.Dispatcher, []),
+      worker(Wanon.Cache.Clean, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

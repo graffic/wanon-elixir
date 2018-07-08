@@ -41,13 +41,13 @@ config :wanon,
        password: System.get_env("WANON_DB_PASSWORD")
 
 config :wanon,
-       Wanon.Telegram,
+       Wanon.Telegram.HTTP,
        timeout: String.to_integer(System.get_env("WANON_TELEGRAM_TIMEOUT") || "0"),
        token: System.get_env("WANON_TELEGRAM_TOKEN"),
        base_url: "https://api.telegram.org/bot"
 
 config :wanon,
-       Wanon.Quotes.Consumer,
+       Wanon.Dispatcher,
        MapSet.new([
          # Sandbox chat
          -11_802_333,
@@ -62,11 +62,11 @@ config :wanon,
        ])
 
 config :wanon,
-       Wanon.Quotes.CacheClean,
+       Wanon.Cache.Clean,
        every: 10 * 60 * 1000,
        # 2 days (yes, no Timex)
        keep: 60 * 60 * 24 * 2
 
-config :wanon, Telegram.API, Wanon.Telegram
+config :wanon, Wanon.Telegram.Client, Wanon.Telegram.HTTP
 
 import_config "#{Mix.env()}.exs"

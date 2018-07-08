@@ -1,8 +1,8 @@
 defmodule CacheCleanTest do
   use ExUnit.Case
   import Ecto.Query
-  alias Wanon.Quotes.CacheClean
-  alias Wanon.Quotes.CacheEntry
+  alias Wanon.Cache.Clean
+  alias Wanon.Cache.CacheEntry
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Wanon.Repo)
@@ -31,20 +31,20 @@ defmodule CacheCleanTest do
     |> Wanon.Repo.insert()
 
     # Do the cleaning job
-    CacheClean.handle_info(:clean, %{every: 0, keep: 2000})
+    Clean.handle_info(:clean, %{every: 0, keep: 2000})
 
     # Check entries.
-    assert Wanon.Repo.one(from(q in Wanon.Quotes.CacheEntry, select: count("*"))) == 1
+    assert Wanon.Repo.one(from(q in CacheEntry, select: count("*"))) == 1
   end
 
   test "Schedules next" do
-    CacheClean.handle_info(:clean, %{every: 300, keep: 2000})
+    Clean.handle_info(:clean, %{every: 300, keep: 2000})
     refute_receive :clean, 100
     assert_receive :clean, 500
   end
 
   test "Initializes genserver with right parameters" do
-    {:ok, res} = start_supervised(CacheClean)
+    {:ok, res} = start_supervised(Clean)
     assert :sys.get_state(res) == %{every: 42, keep: 84}
   end
 end

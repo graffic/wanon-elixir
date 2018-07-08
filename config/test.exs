@@ -11,13 +11,13 @@ config :wanon,
        pool: Ecto.Adapters.SQL.Sandbox
 
 config :wanon,
-       Wanon.Telegram,
+       Wanon.Telegram.HTTP,
        timeout: 10,
        token: "token"
 
 config :wanon,
-       Wanon.Quotes.CacheClean,
+       Wanon.Cache.Clean,
        every: 42,
        keep: 84
 
-config :wanon, Telegram.API, Telegram.Mock
+config :wanon, Wanon.Telegram.Client, Wanon.Telegram.Mock

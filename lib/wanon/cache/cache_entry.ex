@@ -1,4 +1,4 @@
-defmodule Wanon.Quotes.CacheEntry do
+defmodule Wanon.Cache.CacheEntry do
   use Ecto.Schema
 
   schema "cache_entry" do

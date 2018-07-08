@@ -1,9 +1,9 @@
-defmodule Wanon.Quotes.CacheClean do
+defmodule Wanon.Cache.Clean do
   @moduledoc """
   Clean cache from time to time
   """
   use GenServer, start: {__MODULE__, :start_link, []}
-  alias Wanon.Quotes.CacheEntry
+  alias Wanon.Cache.CacheEntry
   require Logger
   import Ecto.Query, only: [from: 2]
 

@@ -3,7 +3,7 @@ defmodule Wanon.Quotes.Builder do
   Builds a quote from cache if possible.
   """
   import Ecto.Query
-  alias Wanon.Quotes.CacheEntry
+  alias Wanon.Cache.CacheEntry
 
   def build_from(chat_id, message_id, backup_reply) do
     from(
@@ -30,7 +30,7 @@ defmodule Wanon.Quotes.Builder do
   defp find_rest(entry, rest) do
     next_entry =
       from(
-        c in Wanon.Quotes.CacheEntry,
+        c in Wanon.Cache.CacheEntry,
         where: c.chat_id == ^entry.chat_id and c.message_id == ^entry.reply_id
       )
       |> Wanon.Repo.one()

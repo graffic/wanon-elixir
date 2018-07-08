@@ -1,35 +1,20 @@
 defmodule Wanon.Quotes.RQuote do
-  use GenStage
   require Logger
-  alias Wanon.Quotes.{Quote, Consumer, QuoteEntry, Render}
+  alias Wanon.Quotes.{Quote, QuoteEntry, Render}
   alias Wanon.Repo
   import Ecto.Query
 
-  @telegram Application.get_env(:wanon, Telegram.API)
+  @telegram Application.get_env(:wanon, Wanon.Telegram.Client)
 
-  def start_link() do
-    GenStage.start_link(__MODULE__, :ok, name: __MODULE__)
-  end
-
-  def init(:ok) do
-    {:consumer, :ok, subscribe_to: [{Consumer, selector: &selector/1}]}
-  end
-
-  defp selector(%{"message" => %{"text" => text}}) do
+  def selector(%{"message" => %{"text" => text}}) do
     text
     |> String.downcase()
     |> String.starts_with?("/rquote")
   end
 
-  defp selector(_), do: false
+  def selector(_), do: false
 
-  def handle_events(events, _from, state) do
-    Logger.debug("RQUOTE: #{inspect(events)}")
-    Enum.each(events, &handle_event/1)
-    {:noreply, [], state}
-  end
-
-  defp handle_event(%{"message" => %{"chat" => %{"id" => chat_id}} = msg}) do
+  def execute(%{"message" => %{"chat" => %{"id" => chat_id}} = msg}) do
     chat_id
     |> count_quotes()
     |> get_quote()

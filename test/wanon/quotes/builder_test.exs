@@ -1,6 +1,6 @@
 defmodule BuilderTest do
   use ExUnit.Case
-  alias Wanon.Quotes.CacheEntry
+  alias Wanon.Cache.CacheEntry
 
   setup do
     :ok = Ecto.Adapters.SQL.Sandbox.checkout(Wanon.Repo)

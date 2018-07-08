@@ -2,34 +2,20 @@ defmodule Wanon.Quotes.AddQuote do
   @moduledoc """
   Deals with /addquote command
   """
-  use GenStage
   require Logger
-  alias Wanon.Quotes.{Builder, Store, Consumer}
+  alias Wanon.Quotes.{Builder, Store}
 
-  @telegram Application.get_env(:wanon, Telegram.API)
+  @telegram Application.get_env(:wanon, Wanon.Telegram.Client)
 
-  def start_link() do
-    GenStage.start_link(__MODULE__, :ok, name: __MODULE__)
-  end
-
-  def init(:ok) do
-    {:consumer, :ok, subscribe_to: [{Consumer, selector: &selector/1}]}
-  end
-
-  defp selector(%{"message" => %{"text" => text}}) do
+  def selector(%{"message" => %{"text" => text}}) do
     text
     |> String.downcase()
     |> String.starts_with?("/addquote")
   end
 
-  defp selector(_), do: false
+  def selector(_), do: false
 
-  def handle_events(events, _from, state) do
-    Enum.each(events, &handle_event/1)
-    {:noreply, [], state}
-  end
-
-  defp handle_event(%{"message" => %{"reply_to_message" => reply, "from" => from}}) do
+  def execute(%{"message" => %{"reply_to_message" => reply, "from" => from}}) do
     # Add quote
     %{"chat" => %{"id" => chat_id}, "message_id" => message_id} = reply
 
@@ -40,7 +26,7 @@ defmodule Wanon.Quotes.AddQuote do
     @telegram.reply(reply, "procesado correctamente, siguienteeeeeee!!!!")
   end
 
-  defp handle_event(event) do
+  def execute(event) do
     # Notify that you need to reply to a message
     @telegram.reply(event["message"], "Reply to a message to add a quote")
   end

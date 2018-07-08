@@ -10,7 +10,7 @@ config :wanon,
        password: "mysecretpassword"
 
 config :wanon,
-       Wanon.Telegram,
+       Wanon.Telegram.HTTP,
        timeout: 10,
        token: "INTEGRATION",
        base_url: "http://localhost:4242/base"
