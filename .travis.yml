@@ -2,13 +2,13 @@ language: elixir
 elixir: '1.6'
 otp_release: '21.0'
 
+env:
+  - MIX_ENV=test
+  - MIX_ENV=integration
 
 jobs:
   include:
     - stage: test
-      env:
-        - MIX_ENV=test
-        - MIX_ENV=integration
       services:
         - postgresql
       addons:
@@ -20,5 +20,6 @@ jobs:
     - stage: deploy
       services:
         - docker
+      env: MIX_ENV=prod
       script:
-        - docker run --rm -v $PWD:/app graffic/elixir:alpine-arm64v8 -c "cd /app; mix deps.get"
+        - docker run --rm -v $PWD:/app graffic/elixir:alpine-arm64v8 "cd /app; mix deps.get"
