@@ -40,7 +40,8 @@ defmodule Wanon.Mixfile do
       {:excoveralls, "~> 0.9", only: [:test, :integration]},
       {:mox, "~> 0.3", only: :test},
       {:plug, "~> 1.5", only: :integration},
-      {:cowboy, "~> 2.4", only: :integration}
+      {:cowboy, "~> 2.4", only: :integration},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 

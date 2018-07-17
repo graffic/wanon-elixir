@@ -1,14 +1,24 @@
 language: elixir
 elixir: '1.6'
 otp_release: '21.0'
-env:
-  - MIX_ENV=test
-  - MIX_ENV=integration
-services:
-  - postgresql
-addons:
-  postgresql: '9.4'
-before_script:
-  - psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'mysecretpassword';"
-script:
-  - mix coveralls.travis
+
+
+jobs:
+  include:
+    - stage: test
+      env:
+        - MIX_ENV=test
+        - MIX_ENV=integration
+      services:
+        - postgresql
+      addons:
+        postgresql: '9.4'
+      before_script:
+        - psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'mysecretpassword';"
+      script:
+        - mix coveralls.travis
+    - stage: deploy
+      services:
+        - docker
+      script:
+        - docker run --rm -v $PWD:/app graffic/elixir:alpine-arm64v8 -c "cd /app; mix deps.get"
