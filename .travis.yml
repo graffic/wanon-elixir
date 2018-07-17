@@ -5,7 +5,8 @@ addons:
   postgresql: '9.4'
 jobs:
   include:
-    - stage: test
+    - &stage_test
+      stage: test
       env: MIX_ENV=test
       services:
         - postgresql
@@ -13,16 +14,11 @@ jobs:
         - psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'mysecretpassword';"
       script:
         - mix coveralls.travis
-    - env: MIX_ENV=integration
-      services:
-        - postgresql
-      before_script:
-        - psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'mysecretpassword';"
-      script:
-        - mix coveralls.travis
+    - <<: *stage_test
+      env: MIX_ENV=integration
     - stage: deploy
       services:
         - docker
       env: MIX_ENV=prod
       script:
-        - docker run --rm -v $PWD:/app graffic/elixir:alpine-arm64v8 /bin/ash -c "cd /app; mix deps.get"
+        - docker run --rm -v $PWD:/app graffic/elixir:alpine-arm64v8 ls
