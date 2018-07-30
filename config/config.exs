@@ -36,14 +36,15 @@ config :wanon, ecto_repos: [Wanon.Repo]
 config :wanon,
        Wanon.Repo,
        adapter: Ecto.Adapters.Postgres,
-       database: System.get_env("WANON_DB_DATABASE"),
-       username: System.get_env("WANON_DB_USERNAME"),
-       password: System.get_env("WANON_DB_PASSWORD")
+       hostname: "postgresql",
+       database: "wanon",
+       username: "wanon",
+       password: "wanon"
 
 config :wanon,
        Wanon.Telegram.HTTP,
-       timeout: String.to_integer(System.get_env("WANON_TELEGRAM_TIMEOUT") || "0"),
-       token: System.get_env("WANON_TELEGRAM_TOKEN"),
+       timeout: 10,
+       token: "${WANON_TELEGRAM_TOKEN}",
        base_url: "https://api.telegram.org/bot"
 
 config :wanon,

@@ -1,0 +1,20 @@
+version: '3.6'
+services:
+  wanon:
+    build: ./
+    image: wanon:latest
+    environment:
+      - WANON_TELEGRAM_TOKEN
+      - ERLANG_COOKIE
+    depends_on:
+      - postgresql
+  postgresql:
+    image: postgres:alpine
+    # image: arm64v8/postgres:latest
+    environment:
+      - POSTGRES_USER=wanon
+      - POSTGRES_PASSWORD=wanon
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:

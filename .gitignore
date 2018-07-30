@@ -22,8 +22,7 @@ erl_crash.dump
 # Elixir language server files
 .elixir_ls
 
-# Distillery
-rel/
+
 
 # Environment variables
 env/
