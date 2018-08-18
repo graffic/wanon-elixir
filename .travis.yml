@@ -1,5 +1,5 @@
 language: elixir
-elixir: '1.6'
+elixir: '1.7'
 otp_release: '21.0'
 addons:
   postgresql: '9.4'
@@ -21,4 +21,4 @@ jobs:
         - docker
       env: MIX_ENV=prod
       script:
-        - docker run --rm -v $PWD:/app graffic/elixir:alpine-arm64v8 ls
+        - docker build -t wanon:latest .

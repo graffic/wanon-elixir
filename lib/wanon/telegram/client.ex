@@ -6,5 +6,4 @@ defmodule Wanon.Telegram.Client do
               HTTPoison.Response.t() | HTTPoison.AsyncResponse.t()
   @callback send_text(original_message :: map, message :: String.t()) ::
               HTTPoison.Response.t() | HTTPoison.AsyncResponse.t()
-  @callback
 end
