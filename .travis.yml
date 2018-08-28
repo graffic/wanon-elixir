@@ -16,9 +16,12 @@ jobs:
         - mix coveralls.travis
     - <<: *stage_test
       env: MIX_ENV=integration
-    - stage: deploy
+    - stage: docker
       services:
         - docker
       env: MIX_ENV=prod
       script:
         - docker build -t wanon:latest .
+        - docker tag wanon:latest cloud.canister.io:5000/graffic/wanon:latest
+        - echo "$CANISTER_PASSWORD" | docker login -u "$CANISTER_USERNAME" --password-stdin cloud.canister.io:5000
+        - docker push cloud.canister.io:5000/graffic/wanon:latest
