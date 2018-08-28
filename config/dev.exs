@@ -10,4 +10,4 @@ config :wanon,
 config :wanon,
        Wanon.Telegram.HTTP,
        timeout: 10,
-       token: System.get_env("WANON_TELEGRAM_TOKEN"),
+       token: System.get_env("WANON_TELEGRAM_TOKEN")

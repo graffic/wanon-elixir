@@ -50,7 +50,7 @@ release :wanon do
     :runtime_tools
   ]
   set commands: [
-    "migrate_n_run": "rel/commands/migrate_n_run.sh"
+    migrate_n_run: "rel/commands/migrate_n_run.sh"
   ]
 end
 
