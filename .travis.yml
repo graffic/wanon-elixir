@@ -30,6 +30,7 @@ jobs:
         - curl -L https://github.com/dvddarias/rdocker/raw/master/rdocker.sh > rdocker
         - chmod +x rdocker
         - echo $DEPLOY_KEY > deploy_key
+        - chmod 400 deploy_key
         - eval "$(ssh-agent -s)"
         - echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
         - ssh-add ./deploy_key
