@@ -5,33 +5,39 @@ addons:
   postgresql: '9.4'
 jobs:
   include:
-    - &stage_test
-      stage: test
-      env: MIX_ENV=test
-      services:
-        - postgresql
-      before_script:
-        - psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'mysecretpassword';"
-      script:
-        - mix coveralls.travis
-    - <<: *stage_test
-      env: MIX_ENV=integration
-    - stage: docker
-      services:
-        - docker
-      env: MIX_ENV=prod
-      script:
-        - docker build -t wanon:latest .
-        - docker tag wanon:latest cloud.canister.io:5000/graffic/wanon:latest
-        - echo "$CANISTER_PASSWORD" | docker login -u "$CANISTER_USERNAME" --password-stdin cloud.canister.io:5000
-        - docker push cloud.canister.io:5000/graffic/wanon:latest
-    - stage: deploy
-      script:
-        - curl -L https://github.com/dvddarias/rdocker/raw/master/rdocker.sh > rdocker
-        - chmod +x rdocker
-        - echo $DEPLOY_KEY > deploy_key
-        - chmod 400 deploy_key
-        - eval "$(ssh-agent -s)"
-        - echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
-        - ssh-add ./deploy_key
-        - ./rdocker $DEPLOY_HOST container ls
+  - stage: test
+    env: MIX_ENV=test
+    services: &1
+    - postgresql
+    before_script: &2
+    - psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'mysecretpassword';"
+    script: &3
+    - mix coveralls.travis
+  - stage: test
+    env: MIX_ENV=integration
+    services: *1
+    before_script: *2
+    script: *3
+  - stage: docker
+    services:
+    - docker
+    env: MIX_ENV=prod
+    script:
+    - docker build -t wanon:latest .
+    - docker tag wanon:latest cloud.canister.io:5000/graffic/wanon:latest
+    - echo "$CANISTER_PASSWORD" | docker login -u "$CANISTER_USERNAME" --password-stdin
+      cloud.canister.io:5000
+    - docker push cloud.canister.io:5000/graffic/wanon:latest
+  - stage: deploy
+    before_script:
+    - openssl aes-256-cbc -K $encrypted_4deb83d14026_key -iv $encrypted_4deb83d14026_iv
+      -in deploy_key.enc -out deploy_key -d
+    script:
+    - curl -L https://github.com/dvddarias/rdocker/raw/master/rdocker.sh > rdocker
+    - chmod +x rdocker
+    - chmod 400 deploy_key
+    - eval "$(ssh-agent -s)"
+    - echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
+    - ssh-add ./deploy_key
+    - "./rdocker $DEPLOY_HOST container ls"
+

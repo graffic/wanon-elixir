@@ -29,3 +29,6 @@ env/
 
 # MAC stuff
 .DS_Store
+
+# keys
+deploy_key
