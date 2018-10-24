@@ -39,5 +39,5 @@ jobs:
     - eval "$(ssh-agent -s)"
     - echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
     - ssh-add ./deploy_key
-    - "./rdocker $DEPLOY_HOST container ls"
+    - ./rdocker $DEPLOY_HOST docker stack deploy
 
