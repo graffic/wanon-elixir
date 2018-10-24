@@ -7,7 +7,8 @@ config :wanon,
        adapter: Ecto.Adapters.Postgres,
        database: "wanon_test",
        username: "postgres",
-       password: "mysecretpassword"
+       password: "mysecretpassword",
+       hostname: "localhost"
 
 config :wanon,
        Wanon.Telegram.HTTP,

@@ -1,0 +1,8 @@
+_build/
+.elixir_ls
+.vscode
+cover
+deps
+env
+integration
+

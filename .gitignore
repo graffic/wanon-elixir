@@ -22,8 +22,13 @@ erl_crash.dump
 # Elixir language server files
 .elixir_ls
 
+
+
 # Environment variables
 env/
 
 # MAC stuff
 .DS_Store
+
+# keys
+deploy_key

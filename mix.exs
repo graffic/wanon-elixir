@@ -36,11 +36,12 @@ defmodule Wanon.Mixfile do
       {:postgrex, "~> 0.13"},
       {:gen_stage, "~> 0.14"},
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 1.2"},
-      {:excoveralls, "~> 0.9", only: [:test, :integration]},
-      {:mox, "~> 0.3", only: :test},
-      {:plug, "~> 1.5", only: :integration},
-      {:cowboy, "~> 2.4", only: :integration}
+      {:httpoison, "~> 1.3"},
+      {:excoveralls, "~> 0.10", only: [:test, :integration]},
+      {:mox, "~> 0.4", only: :test},
+      {:plug, "~> 1.6", only: :integration},
+      {:cowboy, "~> 2.4", only: :integration},
+      {:distillery, "~> 2.0", runtime: false}
     ]
   end
 
