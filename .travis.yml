@@ -27,5 +27,10 @@ jobs:
         - docker push cloud.canister.io:5000/graffic/wanon:latest
     - stage: deploy
       script:
-        - curl -L https://github.com/dvddarias/rdocker/raw/master/rdocker.sh > /usr/local/bin/rdocker
-        - chmod +x /usr/local/bin/rdocker
+        - curl -L https://github.com/dvddarias/rdocker/raw/master/rdocker.sh > rdocker
+        - chmod +x rdocker
+        - echo $DEPLOY_KEY > deploy_key
+        - eval "$(ssh-agent -s)"
+        - echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
+        - ssh-add ./deploy_key
+        - ./rdocker $DEPLOY_HOST container ls
