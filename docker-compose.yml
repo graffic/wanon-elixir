@@ -2,7 +2,7 @@ version: "3.6"
 services:
   wanon:
     build: ./
-    image: wanon:latest
+    image: cloud.canister.io:5000/graffic/wanon:latest
     environment:
       - WANON_TELEGRAM_TOKEN
       - ERLANG_COOKIE

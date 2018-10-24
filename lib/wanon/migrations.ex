@@ -12,12 +12,6 @@ defmodule Wanon.Migrations do
   def repos, do: Application.get_env(myapp(), :ecto_repos, [])
 
   def seed do
-    me = myapp()
-
-    IO.puts "Loading #{me}.."
-    # Load the code for myapp, but don't start it
-    :ok = Application.load(me)
-
     IO.puts "Starting dependencies.."
     # Start apps necessary for executing migrations
     Enum.each(@start_apps, &Application.ensure_all_started/1)
