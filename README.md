@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.org/graffic/wanon-elixir.svg?branch=master)](https://travis-ci.org/graffic/wanon-elixir)
+[![Coverage Status](https://coveralls.io/repos/github/graffic/wanon-elixir/badge.svg?branch=master)](https://coveralls.io/github/graffic/wanon-elixir?branch=master)
 # Wanon
 
 Telegram quote bot.
@@ -14,17 +15,3 @@ You need a sql database. One way to do this is using a docker container with pos
 This sets the password for the user `postgres`, it also creates a random volume for the database, so remember to clean it up. To open a psql you can use the same image:
 
 `docker run -it --rm --link wanondb:wanondb postgres:alpine psql -h wanondb -U postgres`
-
-## DB Structure
-
-- Message cache: Used to add multiline quotes.
-  - chat_id, msg_id, time, name, msg
-
-- Quote:
-  - id, chat_id, added time, by_who
-
-- Quote msg:
-  - quote_id, time, who, msg
-
-
-
