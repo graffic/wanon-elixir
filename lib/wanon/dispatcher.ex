@@ -27,6 +27,8 @@ defmodule Wanon.Dispatcher do
     |> MapSet.member?(id)
   end
 
+  defp selector(_), do: false
+
   def handle_events([], _from, state) do
     {:noreply, [], state}
   end
