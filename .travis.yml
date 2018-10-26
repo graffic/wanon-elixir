@@ -5,19 +5,19 @@ addons:
   postgresql: '9.4'
 jobs:
   include:
-  - stage: test
+  - &test-stage
+    stage: test
     env: MIX_ENV=test
     services: &1
     - postgresql
     before_script: &2
     - psql -U postgres -c "ALTER USER postgres WITH PASSWORD 'mysecretpassword';"
     script: &3
-    - mix coveralls.travis
-  - stage: test
+    - mix coveralls.json
+    after_success:
+    - bash <(curl -s https://codecov.io/bash)
+  - <<: &test-stage
     env: MIX_ENV=integration
-    services: *1
-    before_script: *2
-    script: *3
   - stage: docker
     services:
     - docker
