@@ -29,6 +29,7 @@ jobs:
       cloud.canister.io:5000
     - docker push cloud.canister.io:5000/graffic/wanon:latest
   - stage: deploy
+    if: NOT commit_message =~ /\[skip deploy\]/
     before_script:
     - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
@@ -44,4 +45,5 @@ jobs:
     - echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
     - ssh-add ./deploy_key
     - ./rdocker $DEPLOY_HOST docker stack deploy -c docker-compose.yml wanon
+
 
