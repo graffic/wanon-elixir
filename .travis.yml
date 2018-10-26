@@ -16,7 +16,7 @@ jobs:
     - mix coveralls.json
     after_success:
     - bash <(curl -s https://codecov.io/bash)
-  - <<: &test-stage
+  - <<: *test-stage
     env: MIX_ENV=integration
   - stage: docker
     services:
