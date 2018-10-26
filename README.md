@@ -23,3 +23,9 @@ Environment variables to set:
   * In dev mode it will use `dev.exs` and get it from the environment
   * In production mode, the default `config.exs` uses `${...}` so distillery will assign it from environment variables on start.
 * `ERLANG_COOKIE` on distillery releases only, with or without container.
+
+## Travis CI 
+
+Two useful notes you can add in a commit message:
+* `[skip ci]` To skip running travis.
+* `[skip deploy]` To skip deploying this commit (This is something custom in `.travis.yml`).
