@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/graffic/wanon-elixir.svg?branch=master)](https://travis-ci.org/graffic/wanon-elixir)
-[![Coverage Status](https://coveralls.io/repos/github/graffic/wanon-elixir/badge.svg?branch=master)](https://coveralls.io/github/graffic/wanon-elixir?branch=master)
+[![codecov](https://codecov.io/gh/graffic/wanon-elixir/branch/master/graph/badge.svg)](https://codecov.io/gh/graffic/wanon-elixir)
 # Wanon
 
 Telegram quote bot.
