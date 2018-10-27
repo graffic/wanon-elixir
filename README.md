@@ -24,6 +24,13 @@ Environment variables to set:
   * In production mode, the default `config.exs` uses `${...}` so distillery will assign it from environment variables on start.
 * `ERLANG_COOKIE` on distillery releases only, with or without container.
 
+## Debugging getUpdates
+
+If you have setup `WANON_TELEGRAM_TOKEN` you can: 
+```
+curl https://api.telegram.org/bot${WANON_TELEGRAM_TOKEN}/getUpdates | jq '.'
+```
+
 ## Travis CI 
 
 Two useful notes you can add in a commit message:
