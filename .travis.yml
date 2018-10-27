@@ -23,6 +23,7 @@ jobs:
     - docker
     env: MIX_ENV=prod
     install: skip
+    if: branch = master
     script:
     - docker build -t wanon:latest .
     - docker tag wanon:latest cloud.canister.io:5000/graffic/wanon:latest
@@ -31,7 +32,7 @@ jobs:
     - docker push cloud.canister.io:5000/graffic/wanon:latest
   - stage: deploy
     install: skip
-    if: NOT commit_message =~ /\[skip deploy\]/
+    if: NOT commit_message =~ /\[skip deploy\]/ AND branch = master
     before_script:
     - curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     - sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
