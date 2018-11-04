@@ -39,6 +39,7 @@ defmodule Wanon.Quotes.RQuote do
       where: q.chat_id == ^chat_id,
       offset: ^Enum.random(0..max(quotes - 1, 0)),
       preload: [entries: ^entries_sort],
+      order_by: q.id,
       limit: 1
     )
     |> Repo.one()
