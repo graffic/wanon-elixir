@@ -47,6 +47,7 @@ jobs:
     - eval "$(ssh-agent -s)"
     - echo -e "StrictHostKeyChecking no\n" >> ~/.ssh/config
     - ssh-add ./deploy_key
-    - ./rdocker $DEPLOY_HOST docker stack deploy -c docker-compose.yml wanon
+    - ./rdocker $DEPLOY_HOST docker login -u "$CANISTER_USERNAME" --password "$CANISTER_PASSWORD" cloud.canister.io:5000
+    - ./rdocker $DEPLOY_HOST docker stack deploy --with-registry-auth -c docker-compose.yml wanon
 
 
