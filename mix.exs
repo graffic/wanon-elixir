@@ -27,6 +27,7 @@ defmodule Wanon.Mixfile do
   defp test_paths(_), do: ["test"]
 
   defp elixirc_paths(:test), do: ["test/support", "lib"]
+  defp elixirc_paths(:integration), do: ["integration/support", "lib"]
   defp elixirc_paths(_), do: ["lib"]
 
   # Run "mix help deps" to learn about dependencies.
@@ -39,8 +40,7 @@ defmodule Wanon.Mixfile do
       {:httpoison, "~> 1.3"},
       {:excoveralls, "~> 0.10", only: [:test, :integration]},
       {:mox, "~> 0.4", only: :test},
-      {:plug, "~> 1.6", only: :integration},
-      {:cowboy, "~> 2.4", only: :integration},
+      {:plug_cowboy, "~> 2.0", only: :integration},
       {:distillery, "~> 2.0", runtime: false}
     ]
   end

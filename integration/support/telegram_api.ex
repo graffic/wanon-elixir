@@ -1,36 +1,29 @@
-defmodule StateServer do
+defmodule Wanon.Integration.StateServer do
   @moduledoc """
   Keeps the current state for response sequences.
 
   For a given path, there is a sequence of responses. After the sequence is finished
   the genserver will keep answering with the last one.
-  """
-  use GenServer
 
-  defmodule State do
-    defstruct replies: [], notify: nil
-  end
-
-  @replies %{
+  The replies map contains the endpoint as a key and a list of answers:
     "/baseINTEGRATION/getUpdates" => [
       {:json, File.read!("integration/fixture.1.json")},
       {:json_block, "{\"result\":[]}", 5}
     ],
-    "/baseINTEGRATION/sendMessage" => [
-      # First rquote, no quotes
-      {:json, File.read!("integration/sendMessage.response.json")},
-      # Add quote without message
-      {:json, File.read!("integration/sendMessage.response.json")},
-      # Right add quote
-      {:json, File.read!("integration/sendMessage.response.json")},
-      # Rquote with quote
-      {:json, File.read!("integration/sendMessage.response.json")},
-      # Second addquote with special cases
-      {:json, File.read!("integration/sendMessage.response.json")}
-    ]
-  }
 
-  def start_link(replies \\ @replies) do
+  * :json answers with the given json string
+  * :json_block answers with the given json and blocks for x seconds.
+  """
+  use GenServer
+
+  defmodule State do
+    @moduledoc """
+    Internal State for a run. It keeps a list of remaining replies.
+    """
+    defstruct replies: [], notify: nil
+  end
+
+  def start_link(replies) do
     GenServer.start_link(__MODULE__, replies)
   end
 
@@ -83,13 +76,17 @@ defmodule StateServer do
     GenServer.call(pid, request_path)
   end
 
+  @doc """
+  Tells the state server to notify the current process when it is finished
+  """
   def subscribe(pid) do
     GenServer.cast(pid, self())
   end
 end
 
-defmodule TestServer do
+defmodule Wanon.Integration.TestServer do
   import Plug.Conn
+  alias Wanon.Integration.StateServer
 
   def init(state_server), do: state_server
 
@@ -118,19 +115,20 @@ defmodule TestServer do
   end
 end
 
-defmodule QuotesTest do
-  use ExUnit.Case, async: false
+defmodule Wanon.Integration.TelegramAPI do
+  alias Wanon.Integration.StateServer
+  alias Wanon.Integration.TestServer
 
-  test "test basic interaction" do
-    # Make test server and state server reusable
-    {:ok, state} = StateServer.start_link()
+  @doc """
+  Configures the state server and launch the telegram API server
+  """
+  def start(replies) do
+    {:ok, state} = StateServer.start_link(replies)
+
     StateServer.subscribe(state)
 
-    {:ok, _} = Plug.Adapters.Cowboy2.http(TestServer, state, port: 4242)
-    Application.ensure_all_started(:wanon)
-
-    receive do
-      :finished -> nil
-    end
+    {:ok, _} = Plug.Cowboy.http(TestServer, state, port: 4242)
   end
+
+  def stop(), do: Plug.Cowboy.shutdown(TestServer.HTTP)
 end

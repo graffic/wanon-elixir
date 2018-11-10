@@ -1,4 +1,4 @@
-defmodule Wanon.Cache.Command do
+defmodule Wanon.Cache.Add do
   @moduledoc """
   Caches all incoming updates through the dispatcher.
   """
@@ -6,7 +6,8 @@ defmodule Wanon.Cache.Command do
   alias Wanon.Cache.CacheEntry
   require Logger
 
-  def selector(_), do: true
+  def selector(%{"message" => _}), do: true
+  def selector(_), do: false
 
   def execute(%{"message" => message}) do
     message
