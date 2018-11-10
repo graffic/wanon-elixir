@@ -3,7 +3,8 @@ defmodule Wanon.Dispatcher do
   require Logger
 
   @commands [
-    Wanon.Cache.Command,
+    Wanon.Cache.Edit,
+    Wanon.Cache.Add,
     Wanon.Quotes.RQuote,
     Wanon.Quotes.AddQuote
   ]
@@ -22,12 +23,14 @@ defmodule Wanon.Dispatcher do
      ]}
   end
 
-  defp selector(%{"message" => %{"chat" => %{"id" => id}}}) do
+  defp selector(%{"message" => msg}), do: filter_chat(msg)
+  defp selector(%{"edited_message" => msg}), do: filter_chat(msg)
+  defp selector(_), do: false
+
+  defp filter_chat(%{"chat" => %{"id" => id}}) do
     Application.get_env(:wanon, __MODULE__)
     |> MapSet.member?(id)
   end
-
-  defp selector(_), do: false
 
   def handle_events([], _from, state) do
     {:noreply, [], state}
