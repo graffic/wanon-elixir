@@ -4,7 +4,7 @@
     {
       "update_id": 93210308,
       "message": {
-        "message_id": 279,
+        "message_id": 200,
         "from": {
           "id": 77629777,
           "is_bot": false,
@@ -27,7 +27,7 @@
     {
       "update_id": 93210309,
       "edited_message": {
-        "message_id": 279,
+        "message_id": 200,
         "from": {
           "id": 77629777,
           "is_bot": false,
@@ -49,9 +49,33 @@
       }
     },
     {
+      "update_id": 93210309,
+      "edited_message": {
+        "message_id": 205,
+        "from": {
+          "id": 77629777,
+          "is_bot": false,
+          "first_name": "Javier",
+          "last_name": "(graffic)",
+          "username": "graffic",
+          "language_code": "en-GR"
+        },
+        "chat": {
+          "id": 77629777,
+          "first_name": "Javier",
+          "last_name": "(graffic)",
+          "username": "graffic",
+          "type": "private"
+        },
+        "date": 1540590127,
+        "edit_date": 1540590133,
+        "text": "Bananas"
+      }
+    },
+    {
         "update_id": 93210310,
         "message": {
-            "message_id": 280,
+            "message_id": 201,
             "from": {
               "id": 77629777,
               "is_bot": false,
