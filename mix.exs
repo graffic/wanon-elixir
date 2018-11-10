@@ -33,8 +33,8 @@ defmodule Wanon.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ecto, "~> 2.2"},
-      {:postgrex, "~> 0.13"},
+      {:ecto_sql, "~> 3.0"},
+      {:postgrex, "~> 0.14"},
       {:gen_stage, "~> 0.14"},
       {:poison, "~> 3.1"},
       {:httpoison, "~> 1.3"},

@@ -19,5 +19,5 @@ config :wanon,
 config :wanon,
        Wanon.Cache.Clean,
        every: 400,
-       # 2 days (yes, no Timex)
-       keep: 60 * 60 * 24 * 2
+       # 2M days (yes, no Timex)
+       keep: 60 * 60 * 24 * 2_000_000

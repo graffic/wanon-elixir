@@ -35,7 +35,6 @@ config :wanon, ecto_repos: [Wanon.Repo]
 
 config :wanon,
        Wanon.Repo,
-       adapter: Ecto.Adapters.Postgres,
        hostname: "postgresql",
        database: "wanon",
        username: "wanon",
