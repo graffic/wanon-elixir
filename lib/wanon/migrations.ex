@@ -3,7 +3,8 @@ defmodule Wanon.Migrations do
     :crypto,
     :ssl,
     :postgrex,
-    :ecto
+    :ecto,
+    :ecto_sql # If using Ecto 3.0 or higher
   ]
 
   @repos Application.get_env(:wanon, :ecto_repos, [])
@@ -33,6 +34,8 @@ defmodule Wanon.Migrations do
 
     # Start the Repo(s) for app
     IO.puts("Starting repos..")
+    
+    # pool_size can be 1 for ecto < 3.0
     Enum.each(@repos, & &1.start_link(pool_size: 2))
   end
 
@@ -46,7 +49,7 @@ defmodule Wanon.Migrations do
   end
 
   defp run_migrations_for(repo) do
-    app = Keyword.get(repo.config, :otp_app)
+    app = Keyword.get(repo.config(), :otp_app)
     IO.puts("Running migrations for #{app}")
     migrations_path = priv_path_for(repo, "migrations")
     Ecto.Migrator.run(repo, migrations_path, :up, all: true)
@@ -67,7 +70,7 @@ defmodule Wanon.Migrations do
   end
 
   defp priv_path_for(repo, filename) do
-    app = Keyword.get(repo.config, :otp_app)
+    app = Keyword.get(repo.config(), :otp_app)
 
     repo_underscore =
       repo
