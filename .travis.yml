@@ -2,11 +2,11 @@ language: elixir
 elixir: '1.7'
 otp_release: '21.0'
 addons:
-  postgresql: "12"
+  postgresql: "11"
   apt:
     packages:
-      - postgres-12
-      - postgresql-client-12
+      - postgres-11
+      - postgresql-client-11
 env:
   global:
     - PGPORT=5433
