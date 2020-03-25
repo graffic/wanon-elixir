@@ -5,8 +5,11 @@ addons:
   postgresql: "12"
   apt:
     packages:
-    - postgresql-server-dev-12
-    - postgresql-client-12
+      - postgresql-server-dev-12
+      - postgresql-client-12
+env:
+  global:
+    - PGPORT=5433
 jobs:
   include:
   - &test-stage
