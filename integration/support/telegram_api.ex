@@ -1,6 +1,6 @@
 defmodule Wanon.Integration.StateServer do
   @moduledoc """
-  Keeps the current state for response sequences.
+  Tracks the current state for response sequences.
 
   For a given path, there is a sequence of responses. After the sequence is finished
   the genserver will keep answering with the last one.

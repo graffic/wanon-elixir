@@ -43,7 +43,7 @@ defmodule QuotesTest do
       ],
       "/baseINTEGRATION/sendMessage" => [
         # Add quote (we need to wait for this because if we don't wait
-        # the test wills top without waiting for the getUpdates to finish)
+        # the test will stop without waiting for the getUpdates to finish)
         {:json, File.read!("integration/sendMessage.response.json")},
       ]
     }
