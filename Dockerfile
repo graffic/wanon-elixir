@@ -15,7 +15,7 @@ RUN mix local.hex --force &&\
 # FROM arm64v8/alpine:latest
 FROM alpine:3.8
 COPY --from=build /build/_build/prod/rel/wanon /wanon
-RUN apk add --no-cache bash
+RUN apk add --no-cache bash openssl
 ENV REPLACE_OS_VARS=true
 WORKDIR /wanon
 ENTRYPOINT [ "bin/wanon", "migrate_n_run" ]
