@@ -13,7 +13,7 @@ RUN mix local.hex --force &&\
     mix release
 
 # FROM arm64v8/alpine:latest
-FROM alpine:latest
+FROM alpine:3.8
 COPY --from=build /build/_build/prod/rel/wanon /wanon
 RUN apk add --no-cache bash
 ENV REPLACE_OS_VARS=true
